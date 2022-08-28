@@ -23,18 +23,19 @@ ARG GID=1000
 RUN groupadd -g $GID $GROUPNAME && \
   useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
 USER $USERNAME
-WORKDIR /home/$USERNAME
 
+# miniconda3
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh -O ~/Miniconda.sh && \
   /bin/bash ~/Miniconda.sh -b -p ~/miniconda3 && \
   rm ~/Miniconda.sh && \
   echo ". ~/miniconda3/etc/profile.d/conda.sh" >> ~/.bashrc && \
   echo "conda activate base" >> ~/.bashrc
 
+WORKDIR /src
 ###########
 #   dev   #
 ###########
-FROM base as dev
+# FROM base as dev
 
 # 開発に必要なパッケージをインストールする
 # RUN conda install <hoge>

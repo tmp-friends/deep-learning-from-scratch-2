@@ -4,6 +4,11 @@ services:
   app:
     build:
       context: .
-      target: dev
+        #target: dev
+    ports:
+      - "5000:5000"
+    tty: true
+    restart: always
     volumes:
-      - '.:/home'
+      - './src:/src'
+
