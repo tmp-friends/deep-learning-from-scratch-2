@@ -1,5 +1,9 @@
 import numpy as np
 
+import sys
+sys.path.append('/src/oreilly-nlp')
+from common.functions import softmax, cross_entropy_error
+
 class MatMul:
     def __init__(self, W):
         self.params = [W]
@@ -20,6 +24,24 @@ class MatMul:
         self.grads[0][...] = dW
 
         return dx
+
+class SoftmaxWithLoss:
+    def __init__(self):
+        self.params, self.grads = [], []
+        self.y = None # softmaxの出力
+        self.t = None # 教師ラベル
+
+    def forward(self, x, t):
+        self.t = t
+        self.y = softmax(x)
+
+        # 教師ラベルがone-hotベクトルの場合、正解のindexに変換
+        if self.t.size == self.y.size:
+            self.t = self.t.argmax(axis=1)
+
+        loss = cross_entropy_error(self.y, self.t)
+
+        return loss
 
 class Sigmoid:
     def __init__(self):
