@@ -12,7 +12,7 @@ class TwoLayerNet:
         W1 = 0.01 * np.random.randn(I, H)
         b1 = np.zeros(H)
         W2 = 0.01 * np.random.randn(H, O)
-        b2 = np.zeros(0)
+        b2 = np.zeros(O)
 
         # レイヤの生成
         self.layers = [
@@ -23,7 +23,7 @@ class TwoLayerNet:
         self.loss_layer = SoftmaxWithLoss()
 
         # すべての重みと勾配をリストにまとめる
-        self.params, self_grads = [], []
+        self.params, self.grads = [], []
         for layer in self.layers:
             self.params += layer.params
             self.grads += layer.grads
